@@ -33,7 +33,7 @@ stu * create() {
     //创建三个结构体 s *head , *stuBefore *stuAfter
     struct stu *head, *stuBefore, *stuAfter;
     //给stuBefore, stuAfter分配内存
-    stuBefore, stuAfter = (struct stu *) malloc(sizeof(struct stu));
+    stuBefore= stuAfter = (struct stu *) malloc(sizeof(struct stu));
     //将head初始化
     head = NULL;
     //获取用户输入的学号和成绩
@@ -56,7 +56,7 @@ stu * create() {
         }
 //     给stuBefor从新开辟一块内存
         stuBefore = (struct stu *) malloc(sizeof(struct stu));
-        //将stuAfer的next指向stuBefore
+        //将stuAfer的next指向stuBefore。第一次执行时，stuAfter->next = stuBefore 就等于 head->next = stuBefore。因为他们的内存地址是一样的
         stuAfter->next = stuBefore;
         //获取用户输入的学号和成绩
         printf("请输入学号：");
