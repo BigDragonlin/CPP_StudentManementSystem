@@ -48,10 +48,9 @@ stu *add(stu *pStu) {
     return pStu;
 }
 
-//链表排序
+//排序
 stu *sort(stu *pStu) {
-
-    return 0;
+    
 }
 
 //录入信息
@@ -103,7 +102,7 @@ stu *print(stu *pStu) {
     }
 }
 
-//删除链表
+//删除链表某个元素
 stu *cut(stu *pStu) {
     printf("请输入要删除的学生的学号：");
     int inputNum;
