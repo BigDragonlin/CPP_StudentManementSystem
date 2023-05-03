@@ -1,7 +1,6 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <d3dx9anim.h>
 
 struct stu {
     int num;
@@ -9,15 +8,49 @@ struct stu {
     struct stu *next;
 };
 
-stu *find() {
+stu *find(stu *pStu) {
+    printf("请输入要查询的学生的学号：");
+    int inputNum;
+    scanf("%d", &inputNum);
+    struct stu *temp;
+    temp = pStu;
+    while (temp->num != inputNum) {
+        if (temp->next) {
+            temp = temp->next;
+        } else{
+            printf("没有找到该学生的信息\n");
+            return 0;
+        }
+    }
+    printf("学号是：%d", temp->num);
+    int score = temp->score;
+    printf("成绩是：%d", score);
+    printf("\n");
     return 0;
 }
 
-stu *add() {
-    return 0;
+stu *add(stu *pStu) {
+    stu *temp = pStu;
+    stu *newStu = (stu *) malloc(sizeof(stu));
+    printf("请输入学号和成绩：");
+    scanf("%d", &newStu->num);
+    scanf("%f", &newStu->score);
+    newStu->next = NULL;
+    //如果pStu为空，将newStu赋值给pStu
+    if (pStu->next == NULL) {
+        pStu->next = newStu;
+    } else {
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newStu;
+    }
+    return pStu;
 }
 
-stu *sort() {
+//链表排序
+stu *sort(stu *pStu) {
+
     return 0;
 }
 
@@ -42,13 +75,17 @@ stu *create() {
             beforeStu = afterStu;
         }
         //为befor分配内存
-        afterStu = (struct stu*)malloc(sizeof(struct stu));
+        afterStu = (struct stu *) malloc(sizeof(struct stu));
         //将afterStu的next指针指向beforeStu
         beforeStu->next = afterStu;
         //赋值给beforeStu
         printf("请输入学号和成绩：");
         scanf("%d", &afterStu->num);
         scanf("%f", &afterStu->score);
+        if (afterStu->num == 0) {
+            afterStu = NULL;
+            break;
+        }
     }
     beforeStu->next = NULL;
     return head;
@@ -59,20 +96,35 @@ stu *print(stu *pStu) {
     p = pStu;
     while (p != NULL) {
         printf("学号是：%d", p->num);
-        printf("成绩是：%f", p->score);
-        printf("/n");
+        int score = p->score;
+        printf("成绩是：%d", score);
+        printf("\n");
         p = p->next;
     }
 }
 
-//修改信息
+//删除链表
 stu *cut(stu *pStu) {
-    //获取学号
-    //遍历链表
-    //找到学号
-    //修改信息
-    //重新指向
-    return 0;
+    printf("请输入要删除的学生的学号：");
+    int inputNum;
+    scanf("%d", &inputNum);
+    struct stu *p, *q;
+    p = pStu;
+    //当p的num不等于输入的num时，q指向p，p指向p的下一个
+    //p的地址是pStu的地址，pStu是头指针
+    //q的地址是p的地址
+    while (p->num != inputNum) {
+        q = p;
+        p = p->next;
+    }
+    //当p的num等于输入的num时，q的next指向p的next
+    if (p == pStu) {
+        pStu = p->next;
+    } else {
+        q->next = p->next;
+    }
+    free(p);//释放内存
+    return pStu;
 }
 
 void menu() {
@@ -104,13 +156,13 @@ void menu() {
                 returnStu = cut(returnStu);
                 break;
             case 4:
-                returnStu = add();
+                returnStu = add(returnStu);
                 break;
             case 5:
-                returnStu = find();
+                returnStu = find(returnStu);
                 break;
             case 6:
-                returnStu = sort();
+                returnStu = sort(returnStu);
                 break;
         }
         printf("请选择您需要的操作：");
